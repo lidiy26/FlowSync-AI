@@ -34,7 +34,7 @@ Yayın: Netlify (CI/CD entegrasyonu ile GitHub üzerinden otomatik deployment)
 
 🔗 Canlı Uygulama
 Projeyi canlı incelemek için: [https://69c29b8f6aa6bb0f8b62f355--fancy-nasturtium-fdc9b5.netlify.app/]                        [http://localhost:8501/]   
-]
+]http://localhost:8501/
 Bu proje, PRD kapsamına göre `MVP` seviyesinde çalışan bir Streamlit arayüzü sağlar:
 - Yolcu için rota arama ve “konfor skoru”
 - Yoğunluk yüksekse nudging (alternatif önerisi)
