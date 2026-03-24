@@ -1,264 +1,85 @@
-<!doctype html>
-<html lang="tr">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>FlowSync AI | Pro Dashboard</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        />
-        <style>
-            body {
-                background-color: #0f172a;
-                color: #f8fafc;
-                font-family: "Inter", sans-serif;
-                scroll-behavior: smooth;
-            }
-            .card {
-                background: #1e293b;
-                border: 1px solid #334155;
-                border-radius: 12px;
-                transition: 0.3s;
-            }
-            .card:hover {
-                border-color: #38bdf8;
-                box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
-            }
-            .tab-btn {
-                padding: 10px 20px;
-                cursor: pointer;
-                border-bottom: 2px solid transparent;
-                transition: 0.3s;
-            }
-            .tab-btn.active {
-                border-color: #38bdf8;
-                color: #38bdf8;
-                font-weight: bold;
-            }
-            .hidden {
-                display: none;
-            }
-        </style>
-    </head>
-    <body class="p-4 md:p-8">
-        <header
-            class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-6"
-        >
-            <div>
-                <h1 class="text-4xl font-extrabold text-sky-400 tracking-tight">
-                    🌐 FlowSync AI
-                </h1>
-                <p class="text-slate-400 mt-1">
-                    Endüstri Mühendisliği | Akıllı Rota & Filo Yönetimi
-                </p>
-            </div>
-            <div class="mt-4 md:mt-0 flex gap-4">
-                <div class="text-right">
-                    <p
-                        class="text-xs text-slate-500 uppercase font-bold tracking-widest"
-                    >
-                        Sistem Durumu
-                    </p>
-                    <p class="text-green-400 font-medium flex items-center">
-                        <span
-                            class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"
-                        ></span>
-                        Canlı Bağlantı
-                    </p>
-                </div>
-            </div>
-        </header>
+<script>
+    const DATA = {
+        İstanbul: {
+            stops: ["Kadıköy", "Beşiktaş", "Zincirlikuyu", "Üsküdar"],
+            prefix: "İETT",
+        },
+        Ankara: {
+            stops: ["Kızılay", "AŞTİ", "Ulus", "Çayyolu"],
+            prefix: "EGO",
+        },
+        İzmir: {
+            stops: ["Konak", "Alsancak", "Bornova", "Karşıyaka"],
+            prefix: "ESHOT",
+        },
+    };
 
-        <div class="flex gap-8 mb-8 border-b border-slate-800">
-            <div
-                id="btn-passenger"
-                class="tab-btn active"
-                onclick="showTab('passenger')"
-            >
-                📱 Yolcu Paneli
-            </div>
-            <div
-                id="btn-operator"
-                class="tab-btn"
-                onclick="showTab('operator')"
-            >
-                🎮 Operatör Komuta
-            </div>
-        </div>
+    function updateBusList() {
+        const city = document.getElementById("citySelect").value;
+        const stopSelect = document.getElementById("stopSelect");
+        const busList = document.getElementById("busList");
 
-        <main>
-            <div
-                id="tab-passenger"
-                class="grid grid-cols-1 lg:grid-cols-3 gap-8"
-            >
-                <div class="card p-6 h-fit">
-                    <h2 class="text-xl font-bold mb-6 text-sky-300">
-                        📍 Seyahat Planlayıcı
-                    </h2>
-                    <div class="space-y-4">
+        // Durakları şehre göre güncelle (Eğer şehir değiştiyse)
+        if (stopSelect.getAttribute("data-city") !== city) {
+            stopSelect.innerHTML = DATA[city].stops
+                .map((s) => `<option>${s}</option>`)
+                .join("");
+            stopSelect.setAttribute("data-city", city);
+        }
+
+        // Akıllı Hat Listesi Oluşturma
+        busList.innerHTML = [1, 2, 3]
+            .map((i) => {
+                const occupancy = Math.floor(Math.random() * 85) + 10;
+                const comfortScore = 100 - occupancy; // Basit bir mühendislik metriği
+                const waitTime = Math.floor(Math.random() * 12) + 2;
+                const carbonSaved = (Math.random() * 2).toFixed(1);
+
+                let colorClass =
+                    occupancy > 75
+                        ? "text-red-500"
+                        : occupancy > 45
+                          ? "text-yellow-500"
+                          : "text-green-500";
+                let bgColor = occupancy > 75 ? "bg-red-500/10" : "bg-slate-900";
+
+                return `
+                <div class="card p-6 flex flex-col md:flex-row justify-between items-center ${bgColor} border-l-4 ${occupancy > 75 ? "border-l-red-500" : "border-l-sky-500"}">
+                    <div class="mb-4 md:mb-0">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-sky-500 text-slate-900 text-xs font-bold px-2 py-1 rounded">${DATA[city].prefix}</span>
+                            <h3 class="font-bold text-xl text-white">Hat ${Math.floor(Math.random() * 400) + 100}</h3>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-1"><i class="far fa-clock mr-1"></i> Bekleme: <b>${waitTime} dk</b></p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-center md:text-right">
                         <div>
-                            <label class="block text-sm text-slate-400 mb-1"
-                                >Şehir Seçin</label
-                            >
-                            <select
-                                id="citySelect"
-                                onchange="updateBusList()"
-                                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 outline-none focus:border-sky-500"
-                            >
-                                <option value="İstanbul">İstanbul</option>
-                                <option value="Ankara">Ankara</option>
-                                <option value="İzmir">İzmir</option>
-                            </select>
+                            <p class="text-xs text-slate-500 uppercase">Doluluk</p>
+                            <p class="font-black text-lg ${colorClass}">%${occupancy}</p>
                         </div>
                         <div>
-                            <label class="block text-sm text-slate-400 mb-1"
-                                >Durak</label
-                            >
-                            <select
-                                id="stopSelect"
-                                onchange="updateBusList()"
-                                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 outline-none focus:border-sky-500"
-                            ></select>
-                        </div>
-                        <div
-                            class="p-4 bg-sky-500/10 border border-sky-500/20 rounded-lg"
-                        >
-                            <p
-                                class="text-xs text-sky-400 font-bold uppercase mb-1"
-                            >
-                                AI Nudging Notu
-                            </p>
-                            <p class="text-sm text-slate-300 italic">
-                                Alternatif rotaları seçerek 15 Puan kazanabilir
-                                ve karbon ayak izinizi %12 düşürebilirsiniz.
-                            </p>
+                            <p class="text-xs text-slate-500 uppercase">Konfor</p>
+                            <p class="font-black text-lg text-sky-400">${comfortScore}/100</p>
                         </div>
                     </div>
-                </div>
 
-                <div class="lg:col-span-2 space-y-4">
-                    <h2 class="text-xl font-bold text-slate-200">
-                        ✨ Önerilen Hatlar
-                    </h2>
-                    <div id="busList" class="space-y-4"></div>
-                </div>
-            </div>
-
-            <div id="tab-operator" class="hidden space-y-6">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="card p-4">
-                        <p class="text-xs text-slate-400">Aktif Araç</p>
-                        <p class="text-2xl font-bold">142</p>
-                    </div>
-                    <div class="card p-4 border-l-4 border-sky-500">
-                        <p class="text-xs text-slate-400">Ort. Bekleme</p>
-                        <p class="text-2xl font-bold">4.2 dk</p>
-                    </div>
-                    <div class="card p-4 border-l-4 border-green-500">
-                        <p class="text-xs text-slate-400">CO2 Tasarrufu</p>
-                        <p class="text-2xl font-bold">1.4 Ton</p>
-                    </div>
-                    <div class="card p-4 border-l-4 border-red-500">
-                        <p class="text-xs text-slate-400">Doluluk Oranı</p>
-                        <p class="text-2xl font-bold">%72</p>
+                    <div class="mt-4 md:mt-0">
+                        <button onclick="confirmRoute('${carbonSaved}')" class="btn-action px-6 py-2 shadow-lg shadow-sky-500/20">Hattı Seç</button>
+                        <p class="text-[10px] text-green-400 mt-2 text-center">🍃 +${carbonSaved}kg CO2 Tasarrufu</p>
                     </div>
                 </div>
-                <div class="card p-6 border-l-4 border-red-600 bg-red-900/10">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-red-500 font-bold">
-                                ⚠️ KRİTİK YOĞUNLUK: HAT 500T
-                            </h3>
-                            <p class="text-slate-400 text-sm">
-                                Zincirlikuyu durağında yığılma tespit edildi.
-                            </p>
-                        </div>
-                        <button
-                            onclick="alert('Yedek otobüs sevk edildi!')"
-                            class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded-lg font-bold transition"
-                        >
-                            Yedek Otobüs Gönder
-                        </button>
-                    </div>
-                </div>
-                <div
-                    class="card p-4 h-80 bg-slate-900 flex items-center justify-center border-dashed border-2 border-slate-700"
-                >
-                    <p class="text-slate-500 italic">
-                        <i class="fas fa-satellite mr-2"></i>Canlı GPS Haritası
-                        Modülü Bekleniyor...
-                    </p>
-                </div>
-            </div>
-        </main>
+            `;
+            })
+            .join("");
+    }
 
-        <script>
-            const DATA = {
-                İstanbul: ["Kadıköy", "Beşiktaş", "Zincirlikuyu", "Üsküdar"],
-                Ankara: ["Kızılay", "AŞTİ", "Ulus", "Çayyolu"],
-                İzmir: ["Konak", "Alsancak", "Bornova", "Karşıyaka"],
-            };
+    function confirmRoute(carbon) {
+        alert(
+            `Rota onaylandı!\nBu yolculukla doğaya ${carbon}kg daha az karbon salınımı yapacaksınız. 🌱`,
+        );
+    }
 
-            function showTab(tab) {
-                document
-                    .getElementById("tab-passenger")
-                    .classList.add("hidden");
-                document.getElementById("tab-operator").classList.add("hidden");
-                document
-                    .getElementById("btn-passenger")
-                    .classList.remove("active");
-                document
-                    .getElementById("btn-operator")
-                    .classList.remove("active");
-
-                document
-                    .getElementById("tab-" + tab)
-                    .classList.remove("hidden");
-                document.getElementById("btn-" + tab).classList.add("active");
-            }
-
-            function updateBusList() {
-                const city = document.getElementById("citySelect").value;
-                const stopSelect = document.getElementById("stopSelect");
-                const busList = document.getElementById("busList");
-
-                // Durakları güncelle
-                if (stopSelect.innerHTML == "") {
-                    stopSelect.innerHTML = DATA[city]
-                        .map((s) => `<option>${s}</option>`)
-                        .join("");
-                }
-
-                // Rastgele otobüsler üret
-                busList.innerHTML = [1, 2, 3]
-                    .map((i) => {
-                        const occupancy = Math.floor(Math.random() * 80) + 15;
-                        const color =
-                            occupancy > 75
-                                ? "text-red-500"
-                                : occupancy > 40
-                                  ? "text-yellow-500"
-                                  : "text-green-500";
-                        return `
-                    <div class="card p-6 flex justify-between items-center">
-                        <div>
-                            <h3 class="font-bold text-lg">🚌 Hat ${Math.floor(Math.random() * 500) + 10}A</h3>
-                            <p class="text-sm text-slate-400">Varış: ${Math.floor(Math.random() * 15) + 2} dk</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold ${color}">%${occupancy} Doluluk</p>
-                            <button onclick="alert('Rota Seçildi!')" class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1 rounded mt-2 hover:bg-sky-500 hover:text-white transition">Hattı Seç</button>
-                        </div>
-                    </div>
-                `;
-                    })
-                    .join("");
-            }
-
-            // İlk açılışta listeyi doldur
-            updateBusList();
-        </script>
-    </body>
-</html>
+    // İlk yükleme
+    window.onload = updateBusList;
+</script>
