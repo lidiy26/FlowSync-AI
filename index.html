@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FlowSync AI | Smart City Dashboard</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <style>
+            body {
+                background-color: #0f172a;
+                color: #f8fafc;
+                font-family: "Inter", sans-serif;
+            }
+            .card {
+                background: #1e293b;
+                border: 1px solid #334155;
+                border-radius: 12px;
+                transition: 0.3s;
+            }
+            .card:hover {
+                border-color: #38bdf8;
+                box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+            }
+            .btn-action {
+                background: #38bdf8;
+                color: #0f172a;
+                font-weight: bold;
+                border-radius: 8px;
+                transition: 0.3s;
+            }
+            .btn-action:hover {
+                background: #7dd3fc;
+                transform: translateY(-2px);
+            }
+        </style>
+    </head>
+    <body class="p-4 md:p-8">
+        <header
+            class="mb-8 flex justify-between items-center border-b border-slate-700 pb-4"
+        >
+            <div>
+                <h1 class="text-3xl font-bold text-sky-400">🌐 FlowSync AI</h1>
+                <p class="text-slate-400">
+                    Akıllı Şehir & Rota Optimizasyon Paneli
+                </p>
+            </div>
+            <div class="text-right">
+                <span
+                    class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-medium"
+                    >Sistem: Aktif</span
+                >
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-sky-300">
+                        <i class="fas fa-map-marked-alt mr-2"></i>Yolcu
+                        Planlayıcı
+                    </h2>
+                    <label class="block text-sm text-slate-400 mb-1"
+                        >Şehir Seçiniz</label
+                    >
+                    <select
+                        id="citySelect"
+                        class="w-full bg-slate-900 border border-slate-700 rounded p-2 mb-4"
+                    >
+                        <option>İstanbul</option>
+                        <option>Ankara</option>
+                        <option>İzmir</option>
+                    </select>
+                    <label class="block text-sm text-slate-400 mb-1"
+                        >Bulunduğunuz Durak</label
+                    >
+                    <input
+                        type="text"
+                        placeholder="Durak adı girin..."
+                        class="w-full bg-slate-900 border border-slate-700 rounded p-2 mb-4"
+                    />
+                    <button class="btn-action w-full py-2">
+                        En Uygun Rotayı Bul
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center">
+                        <p class="text-xs text-slate-400">Aktif Filo</p>
+                        <p class="text-2xl font-bold">142</p>
+                    </div>
+                    <div
+                        class="card p-4 text-center border-l-4 border-l-sky-500"
+                    >
+                        <p class="text-xs text-slate-400">Ort. Bekleme</p>
+                        <p class="text-2xl font-bold">4.2 dk</p>
+                    </div>
+                    <div
+                        class="card p-4 text-center border-l-4 border-l-green-500"
+                    >
+                        <p class="text-xs text-slate-400">Emisyon Tas.</p>
+                        <p class="text-2xl font-bold">%18</p>
+                    </div>
+                    <div
+                        class="card p-4 text-center border-l-4 border-l-amber-500"
+                    >
+                        <p class="text-xs text-slate-400">Doluluk Skoru</p>
+                        <p class="text-2xl font-bold">72/100</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 border-l-4 border-l-red-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-red-400 font-bold">
+                                <i class="fas fa-exclamation-triangle mr-2"></i
+                                >KRİTİK YOĞUNLUK UYARISI
+                            </h3>
+                            <p class="text-sm text-slate-300">
+                                Hat 500T (Zincirlikuyu) doluluk oranı %92'ye
+                                ulaştı.
+                            </p>
+                        </div>
+                        <button
+                            onclick="alert('Yedek araç sevk edildi!')"
+                            class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded text-sm font-bold"
+                        >
+                            Yedek Otobüs Gönder
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="card p-4 h-64 flex items-center justify-center bg-slate-900/50 border-dashed"
+                >
+                    <div class="text-center text-slate-500">
+                        <i class="fas fa-map-marker-alt text-4xl mb-2"></i>
+                        <p>Canlı Filo Takip Haritası (GPS Aktif)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-8 text-center text-slate-500 text-sm italic">
+            "FlowSync AI: Verimlilik ve Konforun Mühendislik ile Buluştuğu
+            Nokta"
+        </footer>
+    </body>
+</html>
