@@ -49,16 +49,7 @@ Varsayılan olarak mock (örnek) veri kullanılır. GTFS-Realtime/GPS ingest ba�
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-## Gemini API anahtarı
-
-API anahtarınızı kodun içine yazmayın. Streamlit secrets veya ortam değişkeni kullanın.
-
-`.streamlit/secrets.toml` örneği:
-```toml
-GOOGLE_API_KEY="REPLACE_ME"
+pip install -r 
 ```
 
 Alternatif: PowerShell ortam değişkeni olarak `GOOGLE_API_KEY` tanımlayabilirsiniz.
