@@ -1,0 +1,11 @@
+Bu proje bir ulaşım optimizasyon projesidir (FlowSync AI).
+
+1) UI sadece Streamlit ile yazılmalıdır (planlanan sayfalar: Yolcu, Operatör, Analitik, Sistem).
+2) Model/optimizasyon mantığı UI’dan ayrılmalı; tüm hesaplar `src/` altındaki modüllerde fonksiyon/kelas olarak tutulmalıdır.
+3) Yapay zeka: Google Gemini (google-generativeai) kullanılır; Gemini çağrıları opsiyoneldir (API anahtarı yoksa güvenli fallback).
+4) API anahtarları asla kod içine yazılmaz: `st.secrets` veya ortam değişkeni kullanılır.
+5) Veri analizi için `pandas` ve `numpy` kullanılmalıdır; ETL/normalize adımları `src/ingest/` altında konumlandırılmalıdır.
+6) Demo/mock veri kullanılıyorsa açıkça “mock” olarak işaretlenmelidir (gerçek ingest bağlanınca sadece mapper/üretim katmanı değişir).
+7) Debug/hata durumlarında kullanıcıya dostça mesaj gösterilmeli (`st.warning`, `st.error`); teknik stack trace UI’da spam yapılmamalıdır.
+8) `PRD.md` ve `tasks.md` doğrultusunda geliştirilir; bir görevin kod karşılığı eklendikten sonra `tasks.md` güncellenir.
+9) Her PR/iterasyon sonunda basit “smoke test” yaklaşımıyla `tests/` içindeki import/fonksiyon çağrıları korunmalıdır.
